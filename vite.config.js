@@ -1,21 +1,21 @@
-import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+// vite.config.js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
 export default defineConfig({
+  plugins: [react()],
   server: {
     proxy: {
-      "/api": {
-        target: "https://garbage-tracking-backend.onrender.com",
+      '/driver-login': {
+        target: 'https://garbage-tracking-backend.onrender.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+        secure: false,
       },
-      "/socket": {
-        target: "https://production-backend-3olq.onrender.com", // Use the same target as /api
+      '/socket.io': {
+        target: 'https://production-backend-3olq.onrender.com',
         changeOrigin: true,
-        ws: true,
+        secure: false,
       },
     },
   },
-  plugins: [react()],
 });
