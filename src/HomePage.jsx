@@ -9,21 +9,31 @@ const HomePage = () => {
   useEffect(() => {
     let intervalId;
 
-    const startSendingLocation = () => {
-      intervalId = setInterval(() => {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(position => {
-            const { latitude, longitude } = position.coords;
-            sendLocation(latitude, longitude);
-            socket.emit("coordinatesUpdated", { vehicleId, latitude, longitude });
-          });
-        } else {
-          console.error('Geolocation is not supported by this browser.');
-        }
-      }, 1000);
+    const getLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(sendLocation, handleError, { enableHighAccuracy: true });
+      } else {
+        console.error('Geolocation not supported');
+      }
     };
 
-    startSendingLocation();
+    const sendLocation = (position) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      console.log('Got Location Successfully!');
+
+      // Emit a 'coordinatesUpdated' event to the server
+      socket.emit('coordinatesUpdated', { vehicleId, latitude, longitude });
+
+      // Update the display
+      document.getElementById('log').innerText = `Lat: ${latitude} || Long: ${longitude}`;
+    };
+
+    const handleError = (error) => {
+      console.error('Error getting location', error);
+    };
+
+    intervalId = setInterval(getLocation, 1000);
 
     return () => {
       clearInterval(intervalId);
@@ -31,16 +41,12 @@ const HomePage = () => {
     };
   }, [vehicleId]);
 
-  const sendLocation = (latitude, longitude) => {
-    console.log("Latitude: " + latitude + ", Longitude: " + longitude);
-    // Handle the location data as needed
-  };
-
   return (
     <div>
       <h1>Welcome, {name}</h1>
       <p>Vehicle ID: {vehicleId}</p>
       <p>Area ID: {areaId}</p>
+      <div id="log">Waiting for location...</div>
     </div>
   );
 };

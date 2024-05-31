@@ -1,6 +1,7 @@
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client';
 
-const socket = io("https://production-backend-3olq.onrender.com", {
+// Connect to the WebSocket server with CORS settings
+const socket = io('https://production-backend-3olq.onrender.com', {
   withCredentials: true,
   extraHeaders: {
     "my-custom-header": "abcd"
