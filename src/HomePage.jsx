@@ -4,7 +4,7 @@ import socket from './socket';
 
 const HomePage = () => {
   const location = useLocation();
-  const { name, vehicleId, areaId } = location.state;
+  const { name, vehicleId, areaId, areaName } = location.state;
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
@@ -25,7 +25,7 @@ const HomePage = () => {
     <div>
       <h1>Welcome, {name}</h1>
       <p>Vehicle ID: {vehicleId}</p>
-      <p>Area ID: {areaId}</p>
+      <p>Area: {areaName}</p>
       <div id="log">Lat: {latitude} || Long: {longitude}</div>
     </div>
   );
