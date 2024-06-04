@@ -7,6 +7,7 @@ const HomePage = () => {
   const { name, vehicleId, areaName, driverImage } = location.state;
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  let locationCount=0;
 
   useEffect(() => {
     window.sendLocation = (lat, lon) => {
@@ -18,6 +19,7 @@ const HomePage = () => {
 
   const sendLocationToServer = (lat, lon) => {
     console.log('Got Location Successfully! Latitude:', lat, 'Longitude:', lon);
+    locationCount = locationCount + 1
     socket.emit('coordinatesUpdated', { vehicleId, latitude: lat, longitude: lon });
   };
 
@@ -32,6 +34,7 @@ const HomePage = () => {
         </div>
       </div>
       <div id="log" style={styles.coordinates}>Lat: {latitude} || Long: {longitude}</div>
+      <div id="log" style={styles.coordinates}>Location Sent: {locationCount} times !</div>
     </div>
   );
 };
