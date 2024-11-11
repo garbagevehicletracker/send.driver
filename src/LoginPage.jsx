@@ -8,7 +8,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('https://garbage-tracking-backend.onrender.com/driver-login/get-all-drivers/')
+    fetch('https://production-backend-nrux.onrender.com/driver-login/get-all-drivers/')
       .then(response => response.json())
       .then(data => setDrivers(data))
       .catch(error => console.error('Error fetching drivers:', error));
@@ -22,7 +22,7 @@ const LoginPage = () => {
 
     console.log('Login Data:', loginData);  // Log the data being sent for login
 
-    fetch('https://garbage-tracking-backend.onrender.com/driver-login/login', {
+    fetch('https://production-backend-nrux.onrender.com/driver-login/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(loginData),
