@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/driver-login': {
-        target: 'https://garbage-tracking-backend.onrender.com',
+        target: 'https://production-backend-nrux.onrender.com',
         changeOrigin: true,
         secure: false,
       },
